@@ -1,0 +1,30 @@
+services:
+  limesurvey:
+    image: luiselianmg/limesurvey-project:v1
+    volumes:
+      - ./surveys:/var/www/html/upload/surveys
+    networks:
+      - limesurvey-db
+    ports:
+      - '8080:8080' 
+    environment:
+      - 'DB_HOST=lime-db'
+      - 'DB_PASSWORD=mypassword'
+      - 'DB_NAME=limesurvey'
+      - 'ADMIN_PASSWORD=mypassword'
+      - 'ADMIN_EMAIL=luiselian001@gamil.com'
+      - 'ADMIN_NAME=limesurvey-admin'
+      - 'ADMIN_USER=limesurvey'
+  lime-db:
+    image: mariadb:11.4
+    networks:
+      - limesurvey-db
+    environment:
+      - 'MYSQL_USER=limesurvey'
+      - 'MYSQL_DATABASE=limesurvey'
+      - 'MYSQL_PASSWORD=mypassword'
+      - 'MYSQL_ROOT_PASSWORD=mypassword'
+
+networks:
+  limesurvey-db:
+    driver: bridge
