@@ -2,7 +2,7 @@ services:
   limesurvey:
     image: luiselianmg/limesurvey-project:v1
     volumes:
-      - ./surveys:/var/www/html/upload/surveys
+      - limesurvey-data:/var/www/html/upload/surveys
     networks:
       - limesurvey-db
     ports:
@@ -17,6 +17,8 @@ services:
       - 'ADMIN_USER=limesurvey'
   lime-db:
     image: mariadb:11.4
+    volumes:
+      - db-data:/var/lib/mysql
     networks:
       - limesurvey-db
     environment:
@@ -28,3 +30,7 @@ services:
 networks:
   limesurvey-db:
     driver: bridge
+
+volumes:
+  limesurvey-data:
+  db-data:
